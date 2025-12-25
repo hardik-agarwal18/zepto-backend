@@ -22,6 +22,7 @@ model User {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  orders    Order[]
 
   @@index([role])
 }
@@ -37,6 +38,7 @@ model Store {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  orders    Order[]
 
   @@index([isActive])
   @@index([city, area])
@@ -51,8 +53,9 @@ model Product {
 
   inventories Inventory[]
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  orderItems OrderItem[]
 
   @@index([category])
 }
@@ -74,4 +77,70 @@ model Inventory {
 
   @@unique([storeId, productId, expiryDate])
   @@index([storeId, productId])
+}
+
+model Order {
+  id          String      @id @default(uuid())
+  userId      String
+  storeId     String
+  status      OrderStatus @default(CREATED)
+  totalAmount Decimal
+
+  user    User        @relation(fields: [userId], references: [id])
+  store   Store       @relation(fields: [storeId], references: [id])
+  items   OrderItem[]
+  payment Payment?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([storeId])
+  @@index([status])
+}
+
+model OrderItem {
+  id        String @id @default(uuid())
+  orderId   String
+  productId String
+
+  quantity Int
+  price    Decimal
+
+  order   Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  @@index([orderId])
+  @@index([productId])
+}
+
+model Payment {
+  id                String        @id @default(uuid())
+  orderId           String        @unique
+  status            PaymentStatus
+  provider          String
+  providerPaymentId String?
+
+  order Order @relation(fields: [orderId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum OrderStatus {
+  CREATED
+  PAID
+  PACKING
+  OUT_FOR_DELIVERY
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  INITIATED
+  SUCCESS
+  FAILED
+  REFUNDED
 }
