@@ -7,20 +7,71 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
-  passwordHash String
-  role         Role     @default(CUSTOMER)
-  isVerified   Boolean  @default(false)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-
-  @@index([role])
-}
-
 enum Role {
   ADMIN
   CUSTOMER
   DELIVERY_AGENT
+}
+
+model User {
+  id           String  @id @default(uuid())
+  email        String  @unique
+  passwordHash String
+  role         Role    @default(CUSTOMER)
+  isVerified   Boolean @default(false)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([role])
+}
+
+model Store {
+  id       String  @id @default(uuid())
+  name     String
+  city     String
+  area     String
+  isActive Boolean @default(true)
+
+  inventories Inventory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive])
+  @@index([city, area])
+}
+
+model Product {
+  id           String  @id @default(uuid())
+  name         String
+  category     String
+  unit         String // kg, litre, piece
+  isPerishable Boolean @default(false)
+
+  inventories Inventory[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([category])
+}
+
+model Inventory {
+  id String @id @default(uuid())
+
+  storeId   String
+  productId String
+
+  quantity   Int
+  expiryDate DateTime?
+
+  store   Store   @relation(fields: [storeId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([storeId, productId, expiryDate])
+  @@index([storeId, productId])
 }
