@@ -41,5 +41,6 @@ export async function login(email, password) {
   if (!valid) throw new Error("Invalid credentials");
 
   const tokens = generateTokens(user);
-  return { user, ...tokens };
+  const { passwordHash, ...userWithoutPassword } = user;
+  return { user: userWithoutPassword, ...tokens };
 }
