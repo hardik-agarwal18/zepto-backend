@@ -3,6 +3,7 @@ import { addEmailJob, addNotificationJob } from "./queues/index.js";
 import cartRoutes from "./modules/cart/cart.routes.js";
 import paymentRoutes from "./modules/payment/payment.routes.js";
 import userRoutes from "./modules/user/user.routes.js";
+import authRoutes from "./modules/auth/auth.routes.js";
 
 const app = express();
 app.use(express.json());
@@ -40,5 +41,6 @@ app.post("/test/notification", async (req, res) => {
 app.use("/cart", cartRoutes);
 app.use("/payment", paymentRoutes);
 app.use("/users", userRoutes);
+app.use("/auth", authRoutes);
 
 export default app;
