@@ -4,6 +4,7 @@ import cartRoutes from "./modules/cart/cart.routes.js";
 import paymentRoutes from "./modules/payment/payment.routes.js";
 import userRoutes from "./modules/user/user.routes.js";
 import authRoutes from "./modules/auth/auth.routes.js";
+import productRoutes from "./modules/product/product.routes.js";
 
 const app = express();
 app.use(express.json());
@@ -42,5 +43,6 @@ app.use("/cart", cartRoutes);
 app.use("/payment", paymentRoutes);
 app.use("/users", userRoutes);
 app.use("/auth", authRoutes);
+app.use("/products", productRoutes);
 
 export default app;
