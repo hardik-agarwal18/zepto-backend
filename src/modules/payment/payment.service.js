@@ -2,7 +2,7 @@ import db from "../../config/db.js";
 import { v4 as uuid } from "uuid";
 
 export async function initiatePayment(orderId, provider = "MOCK") {
-  const client = await db.getClient();
+  const client = await db.connect();
 
   try {
     await client.query("BEGIN");
@@ -52,7 +52,7 @@ export async function initiatePayment(orderId, provider = "MOCK") {
 }
 
 export async function confirmPayment(orderId) {
-  const client = await db.getClient();
+  const client = await db.connect();
 
   try {
     await client.query("BEGIN");

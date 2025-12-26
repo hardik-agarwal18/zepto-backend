@@ -8,7 +8,7 @@ export async function createOrder({
   storeId,
   items, // [{ productId, quantity, price }]
 }) {
-  const client = await db.getClient();
+  const client = await db.connect();
   const orderId = uuid();
 
   try {

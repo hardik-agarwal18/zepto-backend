@@ -3,7 +3,7 @@ import db from "../../config/db.js";
 import * as storeRepo from "./store.repo.js";
 
 export async function createStore(data) {
-  const client = await db.getClient();
+  const client = await db.connect();
   try {
     await client.query("BEGIN");
 
@@ -31,7 +31,7 @@ export async function getStore(id) {
 }
 
 export async function setStoreStatus(id, isActive) {
-  const client = await db.getClient();
+  const client = await db.connect();
   try {
     await client.query("BEGIN");
     await storeRepo.updateStatus(client, id, isActive);

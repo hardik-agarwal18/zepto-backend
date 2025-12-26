@@ -8,7 +8,7 @@ export async function signup(email, password) {
   const existing = await userRepo.findByEmail(email);
   if (existing) throw new Error("Email already exists");
 
-  const client = await db.getClient();
+  const client = await db.connect();
   try {
     await client.query("BEGIN");
 

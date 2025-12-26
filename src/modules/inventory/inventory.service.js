@@ -6,7 +6,7 @@ import {
 } from "./inventory.lock.js";
 
 export async function reserveStock({ storeId, items }) {
-  const client = await db.getClient();
+  const client = await db.connect();
   const locks = [];
 
   try {

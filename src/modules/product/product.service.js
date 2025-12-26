@@ -3,7 +3,7 @@ import db from "../../config/db.js";
 import * as productRepo from "./product.repo.js";
 
 export async function createProduct(data) {
-  const client = await db.getClient();
+  const client = await db.connect();
   try {
     await client.query("BEGIN");
 
