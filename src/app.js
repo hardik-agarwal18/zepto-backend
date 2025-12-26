@@ -1,5 +1,6 @@
 import express from "express";
 import { addEmailJob, addNotificationJob } from "./queues/index.js";
+import cartRoutes from "./modules/cart/cart.routes.js";
 
 const app = express();
 app.use(express.json());
@@ -33,5 +34,7 @@ app.post("/test/notification", async (req, res) => {
     res.status(500).json({ success: false, error: error.message });
   }
 });
+
+app.use("/cart", cartRoutes);
 
 export default app;
