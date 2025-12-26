@@ -1,6 +1,7 @@
 import express from "express";
 import { addEmailJob, addNotificationJob } from "./queues/index.js";
 import cartRoutes from "./modules/cart/cart.routes.js";
+import paymentRoutes from "./modules/payment/payment.routes.js";
 
 const app = express();
 app.use(express.json());
@@ -36,5 +37,6 @@ app.post("/test/notification", async (req, res) => {
 });
 
 app.use("/cart", cartRoutes);
+app.use("/payment", paymentRoutes);
 
 export default app;
