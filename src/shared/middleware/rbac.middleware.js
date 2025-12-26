@@ -1,4 +1,4 @@
-import { ApiError } from "../errors/ApiError.js";
+import ApiError from "../errors/ApiError.js";
 import { ERROR_CODES } from "../errors/errorCodes.js";
 
 export function authorizeRoles(...allowedRoles) {
