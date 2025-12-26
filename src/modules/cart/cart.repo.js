@@ -1,4 +1,4 @@
-import redis from "../../shared/redis/index.js";
+import redis from "../../config/redis.js";
 
 const CART_TTL = 60 * 30; // 30 minutes
 

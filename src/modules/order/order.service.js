@@ -1,4 +1,4 @@
-import db from "../../shared/db/index.js";
+import db from "../../config/db.js";
 import { v4 as uuid } from "uuid";
 import * as orderRepo from "./order.repo.js";
 import { reserveStock } from "../inventory/inventory.service.js";

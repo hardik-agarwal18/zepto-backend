@@ -1,4 +1,4 @@
-import db from "../../shared/db/index.js";
+import db from "../../config/db.js";
 import * as inventoryRepo from "./inventory.repo.js";
 import {
   acquireInventoryLock,

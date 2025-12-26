@@ -1,4 +1,4 @@
-import db from "../../shared/db/index.js";
+import db from "../../config/db.js";
 
 // Fetch inventory rows for given products in a store
 

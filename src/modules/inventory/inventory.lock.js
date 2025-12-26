@@ -1,4 +1,4 @@
-import redis from "../../shared/redis/index.js";
+import redis from "../../config/redis.js";
 
 export async function acquireInventoryLock(storeId, productId) {
   const key = `lock:inventory:${storeId}:${productId}`;
