@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import env from "../../config/env.js";
+import { ENV } from "../../config/env.js";
 import { ApiError, ERROR_CODES } from "../errors/index.js";
 
 export default function authMiddleware(req, res, next) {
@@ -19,7 +19,7 @@ export default function authMiddleware(req, res, next) {
     const token = authHeader.split(" ")[1];
 
     // 3️⃣ Verify token
-    const decoded = jwt.verify(token, env.JWT_SECRET);
+    const decoded = jwt.verify(token, ENV.JWT_SECRET);
 
     // 4️⃣ Attach user to request
     req.user = {
