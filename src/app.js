@@ -2,6 +2,7 @@ import express from "express";
 import { addEmailJob, addNotificationJob } from "./queues/index.js";
 import cartRoutes from "./modules/cart/cart.routes.js";
 import paymentRoutes from "./modules/payment/payment.routes.js";
+import userRoutes from "./modules/user/user.routes.js";
 
 const app = express();
 app.use(express.json());
@@ -38,5 +39,6 @@ app.post("/test/notification", async (req, res) => {
 
 app.use("/cart", cartRoutes);
 app.use("/payment", paymentRoutes);
+app.use("/users", userRoutes);
 
 export default app;
