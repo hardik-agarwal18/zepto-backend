@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import { addEmailJob, addNotificationJob } from "./queues/index.js";
 import cartRoutes from "./modules/cart/cart.routes.js";
 import paymentRoutes from "./modules/payment/payment.routes.js";
@@ -9,6 +10,7 @@ import storeRoutes from "./modules/store/store.routes.js";
 import morgan from "morgan";
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 
