@@ -15,6 +15,19 @@ export async function getInventoryForUpdate(client, storeId, productIds) {
   return rows;
 }
 
+// Create new inventory entry
+
+export async function createInventory(client, storeId, productId, quantity) {
+  const query = `
+    INSERT INTO "Inventory" ("storeId", "productId", "quantity", "createdAt", "updatedAt")
+    VALUES ($1, $2, $3, NOW(), NOW())
+    RETURNING *
+  `;
+
+  const { rows } = await client.query(query, [storeId, productId, quantity]);
+  return rows[0];
+}
+
 // Reduce inventory quantity
 
 export async function reduceInventory(client, inventoryId, quantity) {
