@@ -29,9 +29,11 @@ export async function initiatePayment(orderId, provider = "MOCK") {
         id,
         "orderId",
         status,
-        provider
+        provider,
+        "createdAt",
+        "updatedAt"
       )
-      VALUES ($1, $2, 'INITIATED', $3)
+      VALUES ($1, $2, 'INITIATED', $3, NOW(), NOW())
       `,
       [paymentId, orderId, provider]
     );
@@ -79,7 +81,7 @@ export async function confirmPayment(orderId) {
     await client.query(
       `
       UPDATE "Payment"
-      SET status = 'SUCCESS'
+      SET status = 'SUCCESS', "updatedAt" = NOW()
       WHERE id = $1
       `,
       [payment.id]
@@ -89,7 +91,7 @@ export async function confirmPayment(orderId) {
     await client.query(
       `
       UPDATE "Order"
-      SET status = 'PAID'
+      SET status = 'PAID', "updatedAt" = NOW()
       WHERE id = $1
       `,
       [orderId]

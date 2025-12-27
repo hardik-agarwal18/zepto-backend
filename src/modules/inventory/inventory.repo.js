@@ -20,7 +20,7 @@ export async function getInventoryForUpdate(client, storeId, productIds) {
 export async function reduceInventory(client, inventoryId, quantity) {
   const query = `
     UPDATE "Inventory"
-    SET "quantity" = "quantity" - $1
+    SET "quantity" = "quantity" - $1, "updatedAt" = NOW()
     WHERE "id" = $2
   `;
 

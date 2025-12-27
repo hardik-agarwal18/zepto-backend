@@ -3,8 +3,8 @@ import db from "../../config/db.js";
 export async function createProduct(client, product) {
   const { rows } = await client.query(
     `
-    INSERT INTO "Product" (id, name, category, unit, "isPerishable")
-    VALUES ($1, $2, $3, $4, $5)
+    INSERT INTO "Product" (id, name, category, unit, "isPerishable", "createdAt", "updatedAt")
+    VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
     RETURNING *
     `,
     [

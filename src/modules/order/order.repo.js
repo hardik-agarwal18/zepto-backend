@@ -10,9 +10,11 @@ export async function createOrder(client, order) {
       "userId",
       "storeId",
       status,
-      "totalAmount"
+      "totalAmount",
+      "createdAt",
+      "updatedAt"
     )
-    VALUES ($1, $2, $3, $4, $5)
+    VALUES ($1, $2, $3, $4, $5, NOW(), NOW())
     RETURNING *
   `;
 
@@ -35,9 +37,10 @@ export async function createOrderItems(client, orderItems) {
       "orderId",
       "productId",
       quantity,
-      price
+      price,
+      "createdAt"
     )
-    VALUES ($1, $2, $3, $4, $5)
+    VALUES ($1, $2, $3, $4, $5, NOW())
   `;
 
   for (const item of orderItems) {
