@@ -6,9 +6,11 @@ import userRoutes from "./modules/user/user.routes.js";
 import authRoutes from "./modules/auth/auth.routes.js";
 import productRoutes from "./modules/product/product.routes.js";
 import storeRoutes from "./modules/store/store.routes.js";
+import morgan from "morgan";
 
 const app = express();
 app.use(express.json());
+app.use(morgan("dev"));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
