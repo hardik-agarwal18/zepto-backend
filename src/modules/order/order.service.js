@@ -56,3 +56,27 @@ export async function createOrder({
     client.release();
   }
 }
+
+export async function cancelOrder(orderId) {
+  const client = await db.getClient();
+
+  try {
+    await client.query("BEGIN");
+
+    const order = await orderRepo.findById(orderId);
+    if (!order || order.status !== "CREATED") {
+      await client.query("COMMIT");
+      return;
+    }
+
+    await orderRepo.updateStatus(client, orderId, "CANCELLED");
+
+    // inventory restore handled by caller logic
+    await client.query("COMMIT");
+  } catch (err) {
+    await client.query("ROLLBACK");
+    throw err;
+  } finally {
+    client.release();
+  }
+}
