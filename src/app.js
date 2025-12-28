@@ -8,6 +8,7 @@ import authRoutes from "./modules/auth/auth.routes.js";
 import productRoutes from "./modules/product/product.routes.js";
 import storeRoutes from "./modules/store/store.routes.js";
 import inventoryRoutes from "./modules/inventory/inventory.routes.js";
+import orderRoutes from "./modules/order/order.routes.js";
 import morgan from "morgan";
 
 const app = express();
@@ -52,5 +53,6 @@ app.use("/auth", authRoutes);
 app.use("/products", productRoutes);
 app.use("/stores", storeRoutes);
 app.use("/inventory", inventoryRoutes);
+app.use("/orders", orderRoutes);
 
 export default app;
