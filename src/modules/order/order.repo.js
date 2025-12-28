@@ -53,3 +53,34 @@ export async function createOrderItems(client, orderItems) {
     ]);
   }
 }
+
+export async function findById(orderId) {
+  const { rows } = await db.query(`SELECT * FROM "Order" WHERE id = $1`, [
+    orderId,
+  ]);
+  return rows[0];
+}
+
+export async function findUserOrders(userId) {
+  const { rows } = await db.query(
+    `
+    SELECT *
+    FROM "Order"
+    WHERE "userId" = $1
+    ORDER BY "createdAt" DESC
+    `,
+    [userId]
+  );
+  return rows;
+}
+
+export async function updateStatus(client, orderId, status) {
+  await client.query(
+    `
+    UPDATE "Order"
+    SET status = $1
+    WHERE id = $2
+    `,
+    [status, orderId]
+  );
+}
